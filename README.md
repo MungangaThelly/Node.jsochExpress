@@ -14,6 +14,8 @@ SECRETförfrågan till http://localhost:Port/api/users/secret (med Bearer token 
 PUTförfrågan till http://localhost:Port/api/users/:id
 DELETETförfrågan till http://localhost:Port/api/users/:id
 
+FRONTEND (html) kan man skapar anvädaren också.
+
 
 
 Här har vi installerat:
