@@ -2,7 +2,7 @@
 Node.js och Express som stödjer CRUD-operationer
 
 Sammanfattning
-Du har nu byggt ett REST API med Node.js och Express som stödjer CRUD-operationer.
+Ett REST API med Node.js och Express som stödjer CRUD-operationer.
 Applikationen kan hantera användare (eller andra resurser) i en databas.
 Du har implementerat JWT-baserad autentisering och skapat en säker rutt.
 Frontend gör HTTP-förfrågningar till backend.
