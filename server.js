@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 
 // Databasanslutning
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true }) 
+mongoose.connect(process.env.MONGO_CONNECTION_STRING) 
 .then(() => console.log('Connected to the database'))
 .catch(err => console.error('Database connection error:', err)); 
 
