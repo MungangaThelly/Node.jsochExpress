@@ -1,8 +1,11 @@
 // middleware/auth.js 
 const jwt = require('jsonwebtoken'); 
 const authenticate = (req, res, next) => { 
-    const token = req.header('Authorization'); 
-    if (!token) return res.status(401).json({ message: 'Access denied' }); 
+    const token = req.headers['Authorization']?.split(' '); // Hämtar token från "Authorization" headern
+
+    if (!token) {
+        return res.status(403).json({ message: 'Access denied. No token provided.' }); 
+    } 
     
     try { 
         const verified = jwt.verify(token, process.env.JWT_SECRET); 
