@@ -1,5 +1,6 @@
 // server.js 
-const express = require('express'); 
+const express = require('express');
+const cors = require('cors'); 
 const mongoose = require('mongoose');
 const dotenv = require('dotenv'); 
 const bodyParser = require('body-parser');
@@ -9,6 +10,11 @@ dotenv.config(); // Ladda miljövariabler från .env
 
 
 const app = express();
+
+// Enable CORS for all origins (or specify domains you want to allow)
+app.use(cors());
+
+
 app.use(bodyParser.json()); 
 
 

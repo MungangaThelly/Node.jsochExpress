@@ -69,7 +69,7 @@ router.delete('/:id', async (req, res) => {
 
 
 // Logga in användare (POST)
-router.post('/login', async (req, res) => { 
+router.post('/api/users/login', async (req, res) => { 
     const { email, password } = req.body; 
     
     try { 
