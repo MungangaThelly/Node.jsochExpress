@@ -1,12 +1,11 @@
 // routes/userRoutes.js 
 
-const express = require('express'); 
-const router =  express.Router(); 
-const User = require('../models/User'); 
-const jwt = require('jsonwebtoken'); 
+const express = require('express');
 const bcrypt = require('bcryptjs'); 
+const jwt = require('jsonwebtoken'); 
 const authenticate =require('../middleware/auth') // Importera din middleware
-
+const User = require('../models/User'); 
+const router =  express.Router(); 
 
 // Skapa användare (POST)
 router.post('/register', async (req, res) => { 
@@ -16,6 +15,7 @@ router.post('/register', async (req, res) => {
         const newUser = new User({ name, email, password: hashedPassword }); 
         await newUser.save();
         res.status(201).json(newUser); 
+        
     } catch (error) { 
         res.status(500).json({ message: error.message }); 
     } 
