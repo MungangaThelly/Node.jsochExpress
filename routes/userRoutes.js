@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authenticate = require('../middleware/auth'); // Import your middleware for authentication
 const User = require('../models/User');
+const { verifyPassword } = require('./utils/passwordUtils'); // Import the verifyPassword function
 const router = express.Router();
 
 // Validator function for email format
@@ -38,6 +39,35 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+// Logga in användare (POST)
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required' });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+        // Use the verifyPassword function from the utility module
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET, // Use JWT secret stored in environment variables
+      { expiresIn: '1h' }
+    );
+
+    res.json({ token });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 // Skydda en route (Protected Route)
 router.get('/secret', authenticate, async (req, res) => {
@@ -76,33 +106,6 @@ router.delete('/:id', async (req, res) => {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.status(200).json({ message: 'User deleted' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Logga in användare (POST)
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({ message: 'Email and password are required' });
-  }
-
-  try {
-    const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: 'User not found' });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
-
-    const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET, // Use JWT secret stored in environment variables
-      { expiresIn: '1h' }
-    );
-
-    res.json({ token });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
