@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const app = require('app');  // Go up two directories from tests
+const app = require('app');  
 require('dotenv').config();
 
 // Initialize the Express app
