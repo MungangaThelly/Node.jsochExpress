@@ -89,6 +89,26 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Hämta användare (GET) by ID
+router.get('/:id', async (req, res) => {
+  try {
+    // Get the user ID from the URL parameter
+    const user = await User.findById(req.params.id);
+
+    // If user not found, return an error
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return the user data
+    res.status(200).json(user);
+  } catch (error) {
+    // Handle any errors (e.g., invalid ID format)
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
 // Uppdatera användare (PUT)
 router.put('/:id', async (req, res) => {
   try {
