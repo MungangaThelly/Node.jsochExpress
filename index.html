@@ -15,7 +15,11 @@
     </form>
     <div id="registerResult"></div> <!-- To display registration response -->
 
-   
+    <h1>Get User by ID</h1>
+    <input type="text" id="userId" placeholder="Enter User ID" required>
+    <button id="getUserBtn">Get User</button>
+    <div id="userResult"></div> <!-- To display user details -->
+
     <script>
         // Register user logic
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
